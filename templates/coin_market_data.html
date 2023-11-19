@@ -1,0 +1,56 @@
+{#<!-- your_app_name/templates/coin_market_data.html -->#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Coin Market Data</title>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Coin Market Data</h1>#}
+{#    <pre>{{ data|safe }}</pre>#}
+{#</body>#}
+{#</html>#}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Market Data</title>
+</head>
+<body>
+    <h1>Cryptocurrency Market Data</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price (USD)</th>
+                <th>Percent Change (1h)</th>
+                <th>Percent Change (24h)</th>
+                <th>Market Cap</th>
+                <th>Volume (24h)</th>
+                <!-- Add more table headers for additional fields -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for crypto_info in data %}
+                <tr>
+                    <td><a href="{% url 'currency_details' crypto_info.name %}">{{ crypto_info.name }}</a></td>
+                    <td>{{ crypto_info.price.price }}</td>
+                    <td>{{ crypto_info.Percent_change_1h }}</td>
+                    <td>{{ crypto_info.Percent_change_24h }}</td>
+                    <td>{{ crypto_info.Market_cap }}</td>
+                    <td>{{ crypto_info.Volume_24h }}</td>
+                    <!-- Add more table cells for additional fields -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
