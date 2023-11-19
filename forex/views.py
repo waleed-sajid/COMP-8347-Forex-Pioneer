@@ -24,6 +24,8 @@ def SignupPage(request):
 
             my_user = User.objects.create_user(uname, email, pass1)
             my_user.save()
+            # Set a session variable to indicate successful registration
+            request.session['registration_success'] = True
             return redirect('login')
 
     return render(request, 'signup.html')
@@ -36,6 +38,7 @@ def LoginPage(request):
         user = authenticate(request, username=username, password=pass1)
         if user is not None:
             login(request, user)
+            request.session['login_success'] = True
             return redirect('home')
         else:
             return HttpResponse("Username or Password is incorrect!!!")
@@ -45,9 +48,10 @@ def LoginPage(request):
 
 def LogoutPage(request):
     logout(request)
+    request.session.pop('login_success', None)
+    request.session.pop('registration_success', None)
+
     return redirect('login')
-
-
 # your_app_name/views.py
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
