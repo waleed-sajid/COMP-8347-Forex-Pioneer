@@ -73,7 +73,7 @@ def LoginPage(request):
         if user is not None:
             login(request, user)
             request.session['login_success'] = True
-            return redirect('home')
+            return redirect('forexPioneer:index')
         else:
             return HttpResponse("Username or Password is incorrect!!!")
 

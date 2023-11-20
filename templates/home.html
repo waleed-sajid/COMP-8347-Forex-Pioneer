@@ -23,7 +23,7 @@
     <tbody>
     {% for crypto_info in data %}
         <tr>
-            <td><a href="{% url 'currency_details' crypto_info.name %}">{{ crypto_info.name }}</a></td>
+            <td><a href="{% url 'forexPioneer:currency_details' crypto_info.name %}">{{ crypto_info.name }}</a></td>
             <td>{{ crypto_info.price.price }}</td>
             <td>{{ crypto_info.Percent_change_1h }}</td>
             <td>{{ crypto_info.Percent_change_24h }}</td>

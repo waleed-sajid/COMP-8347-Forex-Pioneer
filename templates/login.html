@@ -21,10 +21,10 @@
         <input type="password" placeholder="Password" id="password" name="pass">
 
         <div class="forgot-password">
-            <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+            <a href="{% url 'forexPioneer:forgot_password' %}">Forgot Password?</a>
         </div>
         <button type="submit">Log In</button>
-        <button class="create-account" type="button" onclick="window.location.href='{% url 'signup' %}'">Create an
+        <button class="create-account" type="button" onclick="window.location.href='{% url 'forexPioneer:signup' %}'">Create an
             account
         </button>
     </form>
