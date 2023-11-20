@@ -48,6 +48,6 @@ urlpatterns = [
     path('logout/', views.LogoutPage, name='logout'),
     path('coin_market_data/', views.coin_market_data, name='coin_market_data'),
     path('currency_details/<str:crypto_name>/', views.currency_details, name='currency_details'),
-
+    path('forgot-password/', views.forgot_password, name='forgot_password'),
 
 ]

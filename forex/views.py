@@ -52,6 +52,13 @@ def LogoutPage(request):
     request.session.pop('registration_success', None)
 
     return redirect('login')
+
+
+def forgot_password(request):
+    # Your view logic here
+    return render(request, 'forget-password.html')
+
+
 # your_app_name/views.py
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
 
+<head>
+    <!-- Design by foolishdeveloper.com -->
     <title>Login Page</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -9,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <!--Stylesheet-->
     <style media="screen">
-  *,
+        *,
         *:before,
         *:after {
             padding: 0;
@@ -19,55 +20,33 @@
 
         body {
             background-color: #ffffff; /* Change background color to white */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
-        .background {
-            width: 430px;
-            height: 520px;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            left: 50%;
-            top: 50%;
+        .background-container {
+            background: linear-gradient(to right, #f0f0f0, #e0e0e0);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+            transition: background 0.3s ease; /* Add a smooth transition for color change */
         }
 
-        .background .shape {
-            height: 200px;
-            width: 200px;
-            position: absolute;
-            border-radius: 50%;
-        }
-
-        .shape:first-child {
-            background: linear-gradient(
-                #1845ad,
-                #23a2f6
-            );
-            left: -80px;
-            top: -80px;
-        }
-
-        .shape:last-child {
-            background: linear-gradient(
-                to right,
-                #ff512f,
-                #f09819
-            );
-            right: -30px;
-            bottom: -80px;
+        .background-container:hover {
+            background: linear-gradient(to right, #d0d0d0, #c0c0c0);
         }
 
         form {
             height: 520px;
             width: 400px;
             background-color: rgba(255, 255, 255, 0.13);
-            position: absolute;
-            transform: translate(-50%, -50%);
-            top: 50%; /* Center vertically */
-            left: 50%;
+            position: relative;
             border-radius: 10px;
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
             padding: 50px 35px;
         }
 
@@ -92,7 +71,7 @@
             margin-top: 30px;
             font-size: 16px;
             font-weight: 500;
-            color: #ffffff; /* Change text color to white */
+            color: #000000;  /* Change text color to white */
         }
 
         input {
@@ -100,27 +79,59 @@
             height: 50px;
             width: 100%;
             background-color: rgba(255, 255, 255, 0.07);
+            border: 1px solid #000000; /* Change border color to black */
             border-radius: 3px;
             padding: 0 10px;
             margin-top: 8px;
             font-size: 14px;
             font-weight: 300;
+            color: #000000; /* Change text color to black */
+        }
+
+        input::placeholder {
+            color: #262323; /* Change placeholder text color to white */
         }
 
         ::placeholder {
-            color: #e5e5e5;
+            color: #2f2f2f;
         }
 
         button {
-            margin-top: 50px;
+            margin-top: 25px; /* Adjust the margin-top value to your preference */
             width: 100%;
-            background-color: #000000; /* Change button background color to black */
-            color: #ffffff; /* Change button text color to white */
+            background-color: #000000;
+            color: #ffffff;
             padding: 15px 0;
             font-size: 18px;
             font-weight: 600;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease; /* Add a smooth transition for color change */
+        }
+
+        button:hover {
+            background-color: #333333; /* Change the background color on hover */
+        }
+
+        .create-account {
+            margin-top: 15px; /* Adjust the margin-top value to your preference */
+            margin-left: 70px;
+            width: 60%;
+
+            background-color: #967900;
+            color: #ffffff;
+            padding: 9px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Add a smooth transition for color change */
+        }
+
+
+
+        .create-account:hover {
+            background-color: #333333; /* Change the background color on hover */
         }
 
         .social {
@@ -149,30 +160,48 @@
         .social i {
             margin-right: 4px;
         }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+            color: #000000; /* Change text color to black */
+            font-size: 14px; /* Adjust font size */
+        }
+
+        .forgot-password a {
+            color: #000000; /* Change link color to black */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease; /* Add a smooth color transition on hover */
+        }
+
+        .forgot-password a:hover {
+            color: #555555; /* Change link color on hover */
+        }
     </style>
 </head>
-+
+
 <body>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
+    <div class="background-container">
+        <form method="post">
+            <h3>Let's Go</h3>
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" placeholder="Enter Username" id="username" name="username">
+
+            <label for="password">Password</label>
+            <input type="password" placeholder="Password" id="password" name="pass">
+
+            <div class="forgot-password">
+    <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+</div>
+
+
+
+            <button type="submit">Log In</button>
+            <button class="create-account" type="button" onclick="window.location.href='{% url 'signup' %}'">Create an account</button>
+        </form>
     </div>
-    <form method="post">
-        <h3>Let's Go</h3>
-        {% csrf_token %}
-        <label for="username">Username</label>
-        <input type="text" placeholder="Enter Username" id="username" name="username">
-
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password" name="pass">
-
-        <button type="submit">Log In</button>
-        <!-- <input type="button" value=""> -->
-        <!-- <div class="social">
-          <div class="go"><i class="fab fa-google"></i>  Google</div>
-          <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
-        </div> -->
-        <a href="{% url 'signup' %}" >Create an account</a>
-    </form>
 </body>
+
 </html>
