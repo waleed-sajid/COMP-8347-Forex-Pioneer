@@ -1,29 +1,3 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#    <title>Currency Details</title>#}
-{#</head>#}
-{#<body>#}
-{#    <h1>{{ crypto_name }} Details</h1>#}
-{##}
-{#    {% if selected_crypto %}#}
-{#        <p>Price (USD): {{ selected_crypto.price.price }}</p>#}
-{#        <p>Percent Change (1h): {{ selected_crypto.Percent_change_1h }}</p>#}
-{#        <p>Percent Change (24h): {{ selected_crypto.Percent_change_24h }}</p>#}
-{#        <p>Market Cap: {{ selected_crypto.Market_cap }}</p>#}
-{#        <p>Volume (24h): {{ selected_crypto.Volume_24h }}</p>#}
-{#        <!-- Add more details as needed -->#}
-{#    {% else %}#}
-{#        <p>Details not available for {{ crypto_name }}</p>#}
-{#    {% endif %}#}
-{##}
-{#    <a href="{% url 'coin_market_data' %}">Back to Coin Market Data</a>#}
-{#</body>#}
-{#</html>#}
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +20,7 @@
         <p>Details not available for {{ crypto_name }}</p>
     {% endif %}
 
-    <a href="{% url 'coin_market_data' %}">Back to Coin Market Data</a>
+    <a href="{% url 'home' %}">Back to Coin Market Data</a>
 
     <script>
         function buyCrypto(cryptoName, price) {
