@@ -90,7 +90,7 @@ def LogoutPage(request):
 
 def forgot_password(request):
     # Your view logic here
-    return render(request, 'forget-password.html')
+    return render(request, 'forget_password.html')
 
 
 def currency_details(request, crypto_name):
