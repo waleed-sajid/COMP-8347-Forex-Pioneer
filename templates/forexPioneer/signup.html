@@ -1,20 +1,16 @@
-<!DOCTYPE html>
+{% extends 'forexPioneer/base.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-    <title>Forex Pioneer</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+{% block title %}Forex Pioneer{% endblock %}
+
+{% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'forex/signup.css' %}"/>
-</head>
+{% endblock %}
 
-<body>
-<h1 style="text-align: center; padding-top: 20px; font-family: 'Poppins', sans-serif; font-size: 36px;">FOREX
-    PIONEER</h1>
-<form action="" method="post">
-    {% csrf_token %}
+{% block content %}
+    <h1 style="text-align: center; padding-top: 20px; font-family: 'Poppins', sans-serif; font-size: 36px;">FOREX PIONEER</h1>
+    <form action="" method="post">
+        {% csrf_token %}
     <h3>Open an Account</h3>
 
     <label for="username">Username</label>
@@ -31,7 +27,5 @@
     <button type="submit">Create Account</button>
 
     <a class="create-account" href="{% url 'forexPioneer:login' %}">I already have an account</a>
-</form>
-</body>
-
-</html>
+    </form>
+{% endblock %}

@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Details</title>
-</head>
-<body>
+{% extends 'forexPioneer/base.html' %}
+
+{% block title %}Currency Details{% endblock %}
+
+{% block content %}
     <h1>{{ crypto_name }} Details</h1>
 
     {% if selected_crypto %}
@@ -28,6 +25,4 @@
             alert(`Buying ${cryptoName} for ${price} USD`);
         }
     </script>
-</body>
-</html>
-
+{% endblock %}

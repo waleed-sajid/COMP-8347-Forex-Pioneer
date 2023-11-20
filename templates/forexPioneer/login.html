@@ -1,17 +1,15 @@
-<!DOCTYPE html>
+{% extends 'forexPioneer/base.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-    <title>Login Page</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+{% block title %}Login Page{% endblock %}
+
+{% block extra_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'forex/login.css' %}"/>
-</head>
-<body>
-<div class="background-container">
-    <form method="post">
+{% endblock %}
+
+{% block content %}
+    <div class="background-container">
+        <form method="post">
         <h3>Let's Go</h3>
         {% csrf_token %}
         <label for="username">Username</label>
@@ -28,6 +26,5 @@
             account
         </button>
     </form>
-</div>
-</body>
-</html>
+    </div>
+{% endblock %}

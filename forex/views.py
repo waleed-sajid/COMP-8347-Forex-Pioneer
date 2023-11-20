@@ -42,7 +42,7 @@ def HomePage(request):
         }
         relevant_data.append(crypto_info)
         request.session['relevant_data'] = relevant_data
-    return render(request, 'home.html', {'data': relevant_data})
+    return render(request, 'forexPioneer/index.html', {'data': relevant_data})
 
 
 def SignupPage(request):
@@ -60,9 +60,9 @@ def SignupPage(request):
             my_user.save()
             # Set a session variable to indicate successful registration
             request.session['registration_success'] = True
-            return redirect('login')
+            return redirect('forexPioneer:login')
 
-    return render(request, 'signup.html')
+    return render(request, 'forexPioneer/signup.html')
 
 
 def LoginPage(request):
@@ -77,7 +77,7 @@ def LoginPage(request):
         else:
             return HttpResponse("Username or Password is incorrect!!!")
 
-    return render(request, 'login.html')
+    return render(request, 'forexPioneer/login.html')
 
 
 def LogoutPage(request):
@@ -90,7 +90,7 @@ def LogoutPage(request):
 
 def forgot_password(request):
     # Your view logic here
-    return render(request, 'forget_password.html')
+    return render(request, 'forexPioneer/forget_password.html')
 
 
 def currency_details(request, crypto_name):
@@ -106,4 +106,4 @@ def currency_details(request, crypto_name):
         'crypto_name': crypto_name,
         'selected_crypto': selected_crypto,
     }
-    return render(request, 'currency_details.html', context)
+    return render(request, 'forexPioneer/currency_details.html', context)
