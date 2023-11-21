@@ -22,3 +22,8 @@ class SignupForm(forms.Form):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords do not match.")
         return password2
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label='Username', max_length=100)
+    password = forms.CharField(label='Password', widget=forms.PasswordInput())

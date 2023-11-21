@@ -74,20 +74,27 @@ def SignupPage(request):
     return render(request, 'forexPioneer/signup.html', {'form': form})
 
 
+class LoginForm:
+    pass
+
+
 def LoginPage(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        pass1 = request.POST.get('pass')
-        user = authenticate(request, username=username, password=pass1)
-        if user is not None:
-            login(request, user)
-            request.session['login_success'] = True
-            return redirect('forexPioneer:index')
-        else:
-            return HttpResponse("Username or Password is incorrect!!!")
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                request.session['login_success'] = True
+                return redirect('forexPioneer:index')
+            else:
+                return HttpResponse("Username or Password is incorrect!!!")
+    else:
+        form = LoginForm()
 
-    return render(request, 'forexPioneer/login.html')
-
+    return render(request, 'forexPioneer/login.html', {'form': form})
 
 def LogoutPage(request):
     logout(request)
