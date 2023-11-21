@@ -49,14 +49,21 @@ def HomePage(request):
 
 def SignupPage(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
             uname = form.cleaned_data['username']
             email = form.cleaned_data['email']
             pass1 = form.cleaned_data['password1']
 
-            my_user = User.objects.create_user(uname, email, pass1)
-            my_user.save()
+            # Try to get the user, create if not exists
+            user, created = User.objects.get_or_create(username=uname, defaults={'email': email, 'password': pass1})
+
+            # Create UserProfile linked to the user
+            user_profile = UserProfile(user=user, id_or_photo=form.cleaned_data['id_or_photo'])
+            user_profile.save()
+            print(f"UserProfile created: {user_profile}")
+            print(f"ID or Photo: {form.cleaned_data['id_or_photo']}")
+
             # Set a session variable to indicate successful registration
             request.session['registration_success'] = True
             return redirect('forexPioneer:login')

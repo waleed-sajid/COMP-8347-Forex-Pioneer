@@ -10,7 +10,7 @@
 {% block content %}
     <h1 style="text-align: center; padding-top: 20px; font-family: 'Poppins', sans-serif; font-size: 36px;">FOREX
         PIONEER</h1>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">>
         {% csrf_token %}
         <h3>Open an Account</h3>
 
@@ -30,6 +30,9 @@
         {{ form.password2 }}
         {{ form.password2.errors }}
 
+        <label for="{{ form.id_or_photo.id_for_label }}">Valid ID or Photo (JPEG, JPG, PNG)</label>
+        {{ form.id_or_photo }}
+        {{ form.id_or_photo.errors }}
 
         <button type="submit">Create Account</button>
 
