@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+
+from forex.forms import SignupForm
 from forex.models import CryptoCurrency
 import json
 
@@ -47,22 +49,21 @@ def HomePage(request):
 
 def SignupPage(request):
     if request.method == 'POST':
-        uname = request.POST.get('username')
-        email = request.POST.get('email')
-        pass1 = request.POST.get('password1')
-        pass2 = request.POST.get('password2')
-
-        if pass1 != pass2:
-            return HttpResponse("Your password and confrom password are not Same!!")
-        else:
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            uname = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            pass1 = form.cleaned_data['password1']
 
             my_user = User.objects.create_user(uname, email, pass1)
             my_user.save()
             # Set a session variable to indicate successful registration
             request.session['registration_success'] = True
             return redirect('forexPioneer:login')
+    else:
+        form = SignupForm()
 
-    return render(request, 'forexPioneer/signup.html')
+    return render(request, 'forexPioneer/signup.html', {'form': form})
 
 
 def LoginPage(request):
