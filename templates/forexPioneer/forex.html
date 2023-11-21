@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitcoin Investment Calculator</title>
+</head>
+<body>
+
+  <h1>Bitcoin Investment Calculator</h1>
+
+  <label for="currentBitcoinPrice">Enter Current Bitcoin Price in USD:</label>
+  <input type="number" id="currentBitcoinPrice">
+
+  <form id="investmentForm">
+    <label for="bitcoinShares">Number of Bitcoin Shares:</label>
+    <input type="number" id="bitcoinShares" min="1" value="1">
+
+    <label for="currencyExchange">Currency Exchange:</label>
+    <select id="currencyExchange">
+      <option value="usd">Bitcoin to USD</option>
+      <option value="eur">Bitcoin to EUR</option>
+      <option value="inr">Bitcoin to INR</option>
+      <!-- Add more currency exchange options as needed -->
+    </select>
+
+    <button type="button" onclick="calculateTotal()">Calculate Total</button>
+  </form>
+
+  <div id="result"></div>
+
+  <button type="button" onclick="makePayment()">Make Payment</button>
+  <div id="paymentResult"></div>
+
+  <script>
+    function calculateTotal() {
+      // Get values from the form
+      var currentBitcoinPrice = document.getElementById("currentBitcoinPrice").value;
+      var bitcoinShares = document.getElementById("bitcoinShares").value;
+      var currencyExchange = document.getElementById("currencyExchange").value;
+
+      // Validate input
+      if (!currentBitcoinPrice || isNaN(currentBitcoinPrice) || currentBitcoinPrice <= 0) {
+        alert("Please enter a valid current Bitcoin price.");
+        return;
+      }
+
+      // Perform the calculation based on the selected currency exchange
+      var total;
+      switch (currencyExchange) {
+        case 'usd':
+          total = bitcoinShares * currentBitcoinPrice;
+          break;
+        case 'eur':
+          // Assuming Euro to USD conversion rate is 1.2
+          total = bitcoinShares * currentBitcoinPrice * 1.2;
+          break;
+        case 'inr':
+          // Assuming INR to USD conversion rate is 0.014
+          total = bitcoinShares * currentBitcoinPrice * 0.014;
+          break;
+        // Add more cases for additional currency exchange options
+        default:
+          total = 0;
+      }
+
+      // Display the result
+      var resultMessage = "Total Investment: " + total.toFixed(2) + " " + currencyExchange.toUpperCase();
+      document.getElementById("result").innerText = resultMessage;
+    }
+
+    function makePayment() {
+      // Simulate a payment process (replace this with actual payment integration)
+      var paymentResultMessage = "Payment Successful! Thank you for your purchase.";
+      document.getElementById("paymentResult").innerText = paymentResultMessage;
+    }
+  </script>
+
+</body>
+</html>
