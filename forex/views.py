@@ -8,8 +8,9 @@ from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 
 from forex.forms import SignupForm
-from forex.models import CryptoCurrency
 import json
+
+from forex.models import UserProfile
 
 
 @login_required(login_url='login')
