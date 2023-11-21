@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -7,7 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 
-from forex.forms import SignupForm
+from forex.forms import SignupForm, LoginForm
 import json
 
 from forex.models import UserProfile
@@ -62,9 +63,8 @@ def SignupPage(request):
             # Create UserProfile linked to the user
             user_profile = UserProfile(user=user, id_or_photo=form.cleaned_data['id_or_photo'])
             user_profile.save()
-            print(f"UserProfile created: {user_profile}")
-            print(f"ID or Photo: {form.cleaned_data['id_or_photo']}")
-
+            # Send confirmation email
+            send_confirmation_email(email)
             # Set a session variable to indicate successful registration
             request.session['registration_success'] = True
             return redirect('forexPioneer:login')
@@ -74,8 +74,13 @@ def SignupPage(request):
     return render(request, 'forexPioneer/signup.html', {'form': form})
 
 
-class LoginForm:
-    pass
+def send_confirmation_email(email):
+    subject = 'Welcome to Forex Pioneer'
+    message = 'Thank you for registering with Forex Pioneer. Your account has been created successfully.'
+    from_email = 'your_email@example.com'
+    recipient_list = [email]
+
+    send_mail(subject, message, from_email, recipient_list)
 
 
 def LoginPage(request):
@@ -95,6 +100,7 @@ def LoginPage(request):
         form = LoginForm()
 
     return render(request, 'forexPioneer/login.html', {'form': form})
+
 
 def LogoutPage(request):
     logout(request)

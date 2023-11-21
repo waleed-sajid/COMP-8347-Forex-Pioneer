@@ -10,18 +10,23 @@
 {% block content %}
     <div class="background-container">
         <form method="post">
-        <h3>Let's Go</h3>
-        {% csrf_token %}
+            <h3>Let's Go</h3>
+            {% csrf_token %}
 
-        {{ form.as_p }}
+            {{ form.username.label_tag }}
+            {{ form.username }}
 
-        <div class="forgot-password">
-            <a href="{% url 'forexPioneer:forgot_password' %}">Forgot Password?</a>
-        </div>
-        <button type="submit">Log In</button>
-        <button class="create-account" type="button" onclick="window.location.href='{% url 'forexPioneer:signup' %}'">Create an
-            account
-        </button>
-    </form>
+            {{ form.password.label_tag }}
+            {{ form.password }}
+
+            <div class="forgot-password">
+                <a href="{% url 'forexPioneer:forgot_password' %}">Forgot Password?</a>
+            </div>
+            <button type="submit">Log In</button>
+            <button class="create-account" type="button"
+                    onclick="window.location.href='{% url 'forexPioneer:signup' %}'">Create an
+                account
+            </button>
+        </form>
     </div>
 {% endblock %}
