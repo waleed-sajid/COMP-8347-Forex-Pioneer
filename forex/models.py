@@ -1,5 +1,6 @@
 # your_app_name/models.py
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 class CryptoCurrency(models.Model):
@@ -11,3 +12,10 @@ class CryptoCurrency(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# class CustomUser(models.Model):
+#     email = models.EmailField(unique=True)
+#
+#     def __str__(self):
+#         return self.username

@@ -4,27 +4,22 @@
 {% block title %}Login Page{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'forex/login.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'forex/login.css' %}" />
 {% endblock %}
 
 {% block content %}
     <div class="background-container">
         <form method="post">
-        <h3>Let's Go</h3>
-        {% csrf_token %}
-        <label for="username">Username</label>
-        <input type="text" placeholder="Enter Username" id="username" name="username">
-
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password" name="pass">
-
-        <div class="forgot-password">
-            <a href="{% url 'forexPioneer:forgot_password' %}">Forgot Password?</a>
-        </div>
-        <button type="submit">Log In</button>
-        <button class="create-account" type="button" onclick="window.location.href='{% url 'forexPioneer:signup' %}'">Create an
-            account
-        </button>
-    </form>
+            <h3>Let's Go</h3>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="forgot-password">
+                <a href="{% url 'forexPioneer:forgot_password' %}">Forgot Password?</a>
+            </div>
+            <button type="submit">Log In</button>
+            <button class="create-account" type="button" onclick="window.location.href='{% url 'forexPioneer:signup' %}'">Create an
+                account
+            </button>
+        </form>
     </div>
 {% endblock %}

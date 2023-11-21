@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from .forms import LoginForm
 from django.http import HttpResponse, JsonResponse
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
@@ -67,25 +68,30 @@ def SignupPage(request):
 
 
 def LoginPage(request):
+    form = LoginForm()
+
     if request.method == 'POST':
-        username = request.POST.get('username')
-        pass1 = request.POST.get('pass')
-        user = authenticate(request, username=username, password=pass1)
-        if user is not None:
-            login(request, user)
-            request.session['login_success'] = True
-            return redirect('forexPioneer:index')
-        else:
-            return HttpResponse("Username or Password is incorrect!!!")
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
 
-    return render(request, 'forexPioneer/login.html')
+            if user is not None:
+                login(request, user)
+                request.session['login_success'] = True
+                return redirect('forexPioneer:index')
+            else:
+                return render(request, 'forexPioneer/login.html', {'form': form, 'error': 'Username or Password is incorrect!!!'})
 
+    return render(request, 'forexPioneer/login.html', {'form': form, 'error': None})
 
 def LogoutPage(request):
     logout(request)
     request.session.pop('login_success', None)
     request.session.pop('registration_success', None)
 
+    return redirect('login')
     return redirect('login')
 
 
