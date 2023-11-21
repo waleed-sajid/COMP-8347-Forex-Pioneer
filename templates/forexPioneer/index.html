@@ -22,8 +22,17 @@
                 <tr>
                     <td><a href="{% url 'forexPioneer:currency_details' crypto_info.name %}">{{ crypto_info.name }}</a></td>
                     <td>{{ crypto_info.price.price }}</td>
-                    <td>{{ crypto_info.Percent_change_1h }}</td>
-                    <td>{{ crypto_info.Percent_change_24h }}</td>
+
+                    <!-- Percent Change (1h) -->
+                    <td style="color: {% if crypto_info.Percent_change_1h >= 0 %}green{% else %}red{% endif %}">
+                        {{ crypto_info.Percent_change_1h }}
+                    </td>
+
+                    <!-- Percent Change (24h) -->
+                    <td style="color: {% if crypto_info.Percent_change_24h >= 0 %}green{% else %}red{% endif %}">
+                        {{ crypto_info.Percent_change_24h }}
+                    </td>
+
                     <td>{{ crypto_info.Market_cap }}</td>
                     <td>{{ crypto_info.Volume_24h }}</td>
                     <!-- Add more table cells for additional fields -->
