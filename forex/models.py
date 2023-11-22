@@ -18,3 +18,14 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username if self.user else f'User Profile {self.pk}'
+
+
+class Order(models.Model):
+    email = models.EmailField(max_length=254)
+    paid = models.BooleanField(default="False")
+    amount = models.IntegerField(default=0)
+    description = models.CharField(default=None, max_length=800)
+
+    def __str__(self):
+        return self.email
+
