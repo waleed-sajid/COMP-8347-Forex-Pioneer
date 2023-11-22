@@ -10,4 +10,9 @@ urlpatterns = [
     path('logout/', views.LogoutPage, name='logout'),
     path('currency_details/<str:crypto_name>/', views.currency_details, name='currency_details'),
     path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('create-checkout-session/', views.create_checkout_session, name='checkout'),
+    path('success.html/', views.success,name='success'),
+    path('cancel.html/', views.cancel,name='cancel'),
+    path('webhooks/stripe/', views.webhook,name='webhook'),
+    # path('forgot_password/', views.forgot_password, name='forgot_password'),
 ]

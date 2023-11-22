@@ -27,10 +27,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STRIPE_PUBLIC_KEY='pk_test_51OEHsHItbrf8SNTB3RnCuQm8eM2Zf4PEXgtaC6vfQtNXgTX2xLNtzTb7keRGKhHgjsaKKUKS9O7MqIAZWIIaqMxg001942BbDN'
+STRIPE_PRIVATE_KEY='sk_test_51OEHsHItbrf8SNTBFD4UlsniEzSy7PpothlW7sViDE1hzfI9TCAQFli3pl4pk6li6WcGggkPQDBVV9w4rLez7wRf00EcZZuYP2'
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    "forex.apps.TutorialConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
