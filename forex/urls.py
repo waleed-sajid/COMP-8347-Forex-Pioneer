@@ -9,5 +9,5 @@ urlpatterns = [
     path('login/', views.LoginPage, name='login'),
     path('logout/', views.LogoutPage, name='logout'),
     path('currency_details/<str:crypto_name>/', views.currency_details, name='currency_details'),
-    path('forgot_password/', views.forgot_password, name='forgot_password'),
+    # path('forgot_password/', views.forgot_password, name='forgot_password'),
 ]

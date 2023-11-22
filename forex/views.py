@@ -10,9 +10,32 @@ from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 
 from forex.forms import SignupForm, LoginForm
 import json
+from django.shortcuts import render
+from django.contrib import messages
+from .forms import PasswordResetForm
+from .models import PasswordResetRequest
+import secrets
 
-from forex.models import UserProfile
+def forgot_password(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
 
+            # Generate and save a reset token
+            token = secrets.token_urlsafe(20)
+            PasswordResetRequest.objects.create(email=email, token=token)
+
+            # TODO: Send an email with the reset link including the token
+            # You'll need to implement email sending logic here.
+
+
+
+            messages.success(request, 'Password reset email sent.')
+    else:
+        form = PasswordResetForm()
+
+    return render(request, 'forgot_password.html', {'form': form})
 
 @login_required(login_url='login')
 def HomePage(request):
