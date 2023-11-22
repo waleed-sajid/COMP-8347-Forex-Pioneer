@@ -26,7 +26,7 @@ def forgot_password(request):
             token = secrets.token_urlsafe(20)
             PasswordResetRequest.objects.create(email=email, token=token)
 
-            # TODO: Send an email with the reset link including the token
+
             # You'll need to implement email sending logic here.
 
 
