@@ -34,7 +34,6 @@ STRIPE_PRIVATE_KEY='sk_test_51OEHsHItbrf8SNTBFD4UlsniEzSy7PpothlW7sViDE1hzfI9TCA
 # Application definition
 
 INSTALLED_APPS = [
-    "forex.apps.TutorialConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

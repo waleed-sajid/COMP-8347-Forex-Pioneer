@@ -159,25 +159,25 @@ def currency_details(request, crypto_name):
     return render(request, 'forexPioneer/currency_details.html', context)
 
 stripe.api_key = settings.STRIPE_PRIVATE_KEY
-YOUR_DOMAIN = 'http://127.0.0.1:8000'
+YOUR_DOMAIN = 'http://127.0.0.1:8000/forexPioneer'
 
 # home view
 def home(request):
-    return render(request, 'checkout.html')
+    return render(request, 'forexPioneer/checkout.html')
 
 
 # success view
 def success(request):
-    return render(request, 'success.html')
+    return render(request, 'forexPioneer/success.html')
 
 
 # cancel view
 def cancel(request):
-    return render(request, 'cancel.html')
+    return render(request, 'forexPioneer/cancel.html')
 
 
 @csrf_exempt
-def create_checkout_session(request):
+def checkout(request):
     order = Order(email=" ", paid="False", amount=0, description=" ")
     order.save()
     session = stripe.checkout.Session.create(
