@@ -2,6 +2,8 @@
 from django import forms
 from django.core.validators import FileExtensionValidator
 
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField()
 
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=150)
@@ -27,7 +29,3 @@ class SignupForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username', max_length=100)
     password = forms.CharField(label='Password', widget=forms.PasswordInput())
-
-
-class PasswordResetForm(forms.Form):
-    email = forms.EmailField()

@@ -7,7 +7,7 @@
  <body>
 <div class="container">
 <h1>Place an order here</h1>
-<form id="checkout-form" method="POST" action="{% url 'forexPioneer:checkout' %}">
+<form id="checkout-form" method="POST" action="checkout/">
       {% csrf_token %}
     </form>
  <button type="button" class="btn btn-lg btn-primary" id="checkout-button">Checkout</button>
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var csrfToken = getCookie('csrftoken');
 
         // Create a new Checkout Session using the server-side endpoint
-        fetch('{% url "forexPioneer:checkout" %}', {
+        fetch('checkout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

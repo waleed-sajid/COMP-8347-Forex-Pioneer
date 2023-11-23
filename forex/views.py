@@ -1,16 +1,20 @@
 from django.core.mail import send_mail
-from django.shortcuts import redirect
+from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from requests import Session
+from requests import Request, Session
+from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import stripe
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from .models import Order, UserProfile
+
 from forex.forms import SignupForm, LoginForm
+import json
 from django.shortcuts import render
 from django.contrib import messages
 from .forms import PasswordResetForm
