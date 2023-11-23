@@ -11,7 +11,7 @@ import stripe
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
-from .models import Order
+from .models import Order, UserProfile
 
 from forex.forms import SignupForm, LoginForm
 import json
@@ -21,26 +21,6 @@ from .forms import PasswordResetForm
 from .models import PasswordResetRequest
 import secrets
 
-def forgot_password(request):
-    if request.method == 'POST':
-        form = PasswordResetForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-
-            # Generate and save a reset token
-            token = secrets.token_urlsafe(20)
-            PasswordResetRequest.objects.create(email=email, token=token)
-
-
-            # You'll need to implement email sending logic here.
-
-
-
-            messages.success(request, 'Password reset email sent.')
-    else:
-        form = PasswordResetForm()
-
-    return render(request, 'forgot_password.html', {'form': form})
 
 @login_required(login_url='login')
 def HomePage(request):
@@ -139,8 +119,40 @@ def LogoutPage(request):
 
 
 def forgot_password(request):
-    # Your view logic here
-    return render(request, 'forexPioneer/forget_password.html')
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+
+            try:
+                # Check if the email exists in your user database
+                user = UserProfile.objects.get(email=email)
+            except UserProfile.DoesNotExist:
+                messages.error(request, 'Email does not exist.')
+                return redirect('forexPioneer:forgot_password')
+
+            # Generate and save a reset token
+            token = secrets.token_urlsafe(20)
+            PasswordResetRequest.objects.create(email=email, token=token)
+
+            base_url = request.build_absolute_uri('/')[:-1]
+
+            # Send email with reset link
+            subject = 'Reset Your Password'
+            message = f'Click the following link to reset your password: {base_url}/reset_password/{token}'
+
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [email]
+
+            send_mail(subject, message, from_email, to_email, fail_silently=False)
+
+            messages.success(request, 'Password reset email sent. Please check your email.')
+            return redirect('forexPioneer:login')
+
+    else:
+        form = PasswordResetForm()
+
+    return render(request, 'forexPioneer/forget_password.html', {'form': form})
 
 
 def currency_details(request, crypto_name):
@@ -158,8 +170,10 @@ def currency_details(request, crypto_name):
     }
     return render(request, 'forexPioneer/currency_details.html', context)
 
+
 stripe.api_key = settings.STRIPE_PRIVATE_KEY
 YOUR_DOMAIN = 'http://127.0.0.1:8000/forexPioneer'
+
 
 # home view
 def home(request):
