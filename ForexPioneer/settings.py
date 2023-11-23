@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -27,9 +26,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-STRIPE_PUBLIC_KEY='pk_test_51OEHsHItbrf8SNTB3RnCuQm8eM2Zf4PEXgtaC6vfQtNXgTX2xLNtzTb7keRGKhHgjsaKKUKS9O7MqIAZWIIaqMxg001942BbDN'
-STRIPE_PRIVATE_KEY='sk_test_51OEHsHItbrf8SNTBFD4UlsniEzSy7PpothlW7sViDE1hzfI9TCAQFli3pl4pk6li6WcGggkPQDBVV9w4rLez7wRf00EcZZuYP2'
-
+STRIPE_PUBLIC_KEY = 'pk_test_51OFQAbI8VF4CMqePbvFqusJ22hkNXOez7BcX0KDXfIgerRqIDePJ0uMbort1t3POd0MYEiZWhSwGsosMNy9TDAGQ00mjNsGub6'
+STRIPE_PRIVATE_KEY = 'sk_test_51OFQAbI8VF4CMqePwoUqR6PM5wLMDX55RIyE0zbMKOCZl65UxGgdUf1TvdiAInkcNcFY3myc03hxcl1AvhcVtRlD00heCQ6nFP'
+STRIPE_ENDPOINT_SECRET = 'whsec_81ca43b46fd530e6ea9283b0b8606c9f762c84ab10039ef8632fac08ddd38104'
 
 # Application definition
 
@@ -74,7 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "ForexPioneer.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -84,7 +82,6 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -104,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -115,7 +111,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
