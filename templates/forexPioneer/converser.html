@@ -1,76 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Converter</title>
+{% extends 'forexPioneer/base.html' %}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
+{% block title %}Crypto Converter{% endblock %}
 
-        h2 {
-            text-align: center;
-            color: #333;
-        }
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+{% endblock %}
 
-        form {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-
-        div {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
+{% block content %}
     <h2>Crypto Converter</h2>
 
     <form method="post" action="{% url 'your_view_name' %}">
-        <!--
         {% csrf_token %}
-        -->
 
         <div>
             <label for="crypto">Select Cryptocurrency:</label>
@@ -109,32 +49,6 @@
             <button type="submit">Convert</button>
         </div>
 
-        <script>
-            function updateCryptoPrice(crypto) {
-                var bitcoinPrice = 36000;
-                var ethereumPrice = 2858;
-                var litecoinPrice = 88;
-
-                var priceField = document.getElementById('price');
-
-                switch (crypto) {
-                    case 'BTC':
-                        priceField.value = bitcoinPrice.toFixed(2);
-                        break;
-                    case 'ETH':
-                        priceField.value = ethereumPrice.toFixed(2);
-                        break;
-                    case 'LTC':
-                        priceField.value = litecoinPrice.toFixed(2);
-                        break;
-                    // Add more cases for additional cryptocurrencies
-                    default:
-                        priceField.value = ''; // Default to empty if no match
-                        break;
-                }
-            }
-        </script>
+        <script src="{% static 'script.js' %}"></script>
     </form>
-
-</body>
-</html>
+{% endblock %}
