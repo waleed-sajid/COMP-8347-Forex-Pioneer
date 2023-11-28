@@ -11,9 +11,9 @@ body {
 }
 
 form {
-    height: 650px; /* Increased the container height */
+    /*height: 650px; !* Increased the container height *!*/
     width: 450px;
-    margin-top: -40px;
+    margin-top: 240px;
     background: linear-gradient(to right, #f0f0f0, #e0e0e0); /* Use the same gradient color as the login page */
     position: absolute;
     transform: translate(-50%, -50%);
