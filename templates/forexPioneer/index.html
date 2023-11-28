@@ -3,41 +3,88 @@
 {% block title %}Coin Market Data{% endblock %}
 
 {% block content %}
-    <h1>Cryptocurrency Market Data</h1>
+    <!-- Menubar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">CryptoMarket</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Price (USD)</th>
-                <th>Percent Change (1h)</th>
-                <th>Percent Change (24h)</th>
-                <th>Market Cap</th>
-                <th>Volume (24h)</th>
-                <!-- Add more table headers for additional fields -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for crypto_info in data %}
-                <tr>
-                    <td><a href="{% url 'forexPioneer:currency_details' crypto_info.name %}">{{ crypto_info.name }}</a></td>
-                    <td>{{ crypto_info.price.price }}</td>
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-end">
+    <div class="col-md-4">
+        {% if user.is_authenticated %}
+            <p class="text-muted text-right">Welcome, <span class="font-weight-bold">{{ user.first_name }}</span>! <a href="{% url 'forexPioneer:logout' %}" class="btn btn-outline-danger ml-2">Logout</a></p>
+        {% else %}
+            <div class="text-right">
+                <a href="{% url 'forexPioneer:login' %}" class="btn btn-primary">Login</a>
+                <a href="{% url 'forexPioneer:signup' %}" class="btn btn-success">Signup</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
 
-                    <!-- Percent Change (1h) -->
-                    <td style="color: {% if crypto_info.Percent_change_1h >= 0 %}green{% else %}red{% endif %}">
-                        {{ crypto_info.Percent_change_1h }}
-                    </td>
+        <h1 class="mb-4">Cryptocurrency Market Data</h1>
 
-                    <!-- Percent Change (24h) -->
-                    <td style="color: {% if crypto_info.Percent_change_24h >= 0 %}green{% else %}red{% endif %}">
-                        {{ crypto_info.Percent_change_24h }}
-                    </td>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Price (USD)</th>
+                        <th>1h Change</th>
+                        <th>24h Change</th>
+                        <th>Market Cap</th>
+                        <th>Volume (24h)</th>
+                        <!-- Add more table headers for additional fields -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for crypto_info in data %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'forexPioneer:currency_details' crypto_info.name %}" class="text-primary">{{ crypto_info.name }}</a></td>
+                            <td>${{ crypto_info.price.price | floatformat:2 }}</td>
 
-                    <td>{{ crypto_info.Market_cap }}</td>
-                    <td>{{ crypto_info.Volume_24h }}</td>
-                    <!-- Add more table cells for additional fields -->
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                            <!-- Percent Change (1h) -->
+                            <td class="{% if crypto_info.Percent_change_1h >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                {{ crypto_info.Percent_change_1h }}%
+                            </td>
+
+                            <!-- Percent Change (24h) -->
+                            <td class="{% if crypto_info.Percent_change_24h >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                {{ crypto_info.Percent_change_24h }}%
+                            </td>
+
+                            <td>${{ crypto_info.Market_cap | floatformat:2 }}</td>
+                            <td>${{ crypto_info.Volume_24h | floatformat:2 }}</td>
+                            <!-- Add more table cells for additional fields -->
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>&copy; 2023 CryptoMarket. All Rights Reserved.</p>
+    </footer>
 {% endblock %}

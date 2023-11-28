@@ -14,6 +14,14 @@
         {% csrf_token %}
         <h3>Open an Account</h3>
 
+        <label for="{{ form.first_name.id_for_label }}">First Name</label>
+        {{ form.first_name }}
+        {{ form.first_name.errors }}
+
+        <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+        {{ form.last_name }}
+        {{ form.last_name.errors }}
+
         <label for="{{ form.username.id_for_label }}">Username</label>
         {{ form.username }}
         {{ form.username.errors }}

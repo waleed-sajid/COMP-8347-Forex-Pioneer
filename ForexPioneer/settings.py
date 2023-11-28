@@ -131,3 +131,5 @@ EMAIL_PORT = 587  # Use 587 for TLS
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'forexpioneeer@gmail.com'
 EMAIL_HOST_PASSWORD = 'fsba quni dlju hisa'
+
+SESSION_COOKIE_AGE = 86400

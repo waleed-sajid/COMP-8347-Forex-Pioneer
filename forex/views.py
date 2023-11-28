@@ -2,7 +2,6 @@ from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from requests import Session
 import stripe
@@ -18,7 +17,6 @@ from .models import PasswordResetRequest
 import secrets
 
 
-@login_required(login_url='login')
 def HomePage(request):
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
     headers = {
@@ -60,15 +58,21 @@ def SignupPage(request):
             uname = form.cleaned_data['username']
             email = form.cleaned_data['email']
             pass1 = form.cleaned_data['password1']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
 
             # Try to get the user, create if not exists
-            user, created = User.objects.get_or_create(username=uname, defaults={'email': email, 'password': pass1})
+            user, created = User.objects.get_or_create(username=uname, defaults={'email': email, 'first_name': first_name, 'last_name': last_name})
+            user.set_password(pass1)
+            user.save()
 
             # Create UserProfile linked to the user
             user_profile = UserProfile(user=user, id_or_photo=form.cleaned_data['id_or_photo'])
             user_profile.save()
+
             # Send confirmation email
             send_confirmation_email(email)
+
             # Set a session variable to indicate successful registration
             request.session['registration_success'] = True
             return redirect('forexPioneer:login')
@@ -108,10 +112,10 @@ def LoginPage(request):
 
 def LogoutPage(request):
     logout(request)
-    request.session.pop('login_success', None)
-    request.session.pop('registration_success', None)
+    request.session.pop('login_success', False)
+    request.session.pop('registration_success', False)
 
-    return redirect('login')
+    return redirect('forexPioneer:index')
 
 
 def forgot_password(request):

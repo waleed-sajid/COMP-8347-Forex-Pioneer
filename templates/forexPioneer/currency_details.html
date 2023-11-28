@@ -3,26 +3,70 @@
 {% block title %}Currency Details{% endblock %}
 
 {% block content %}
-    <h1>{{ crypto_name }} Details</h1>
+    <div class="container mt-5">
+        <h1 class="text-center">{{ crypto_name }} Details</h1>
 
-    {% if selected_crypto %}
-        <p>Price (USD): {{ selected_crypto.price.price }}</p>
-        <p>Percent Change (1h): {{ selected_crypto.Percent_change_1h }}</p>
-        <p>Percent Change (24h): {{ selected_crypto.Percent_change_24h }}</p>
-        <p>Market Cap: {{ selected_crypto.Market_cap }}</p>
-        <p>Volume (24h): {{ selected_crypto.Volume_24h }}</p>
-        <!-- Add more details as needed -->
-        <button onclick="buyCrypto('{{ crypto_name }}', {{ selected_crypto.price.price }})">Buy</button>
-    {% else %}
-        <p>Details not available for {{ crypto_name }}</p>
-    {% endif %}
+        {% if selected_crypto %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="card-title">Price (USD) <i class="fas fa-dollar-sign"></i></h5>
+                            <p class="card-text h2">${{ selected_crypto.price.price | floatformat:2 }}</p>
+                        </div>
 
-    <a href="{% url 'forexPioneer:index' %}">Back to Coin Market Data</a>
+                        <div class="col-md-6">
+                            <h5 class="card-title">Market Cap <i class="fas fa-chart-pie"></i></h5>
+                            <p class="card-text h2">${{ selected_crypto.Market_cap | floatformat:2 }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5 class="card-title">Percent Change (1h) <i class="fas fa-chart-line"></i></h5>
+                            <p class="card-text h2" style="color: {% if selected_crypto.Percent_change_1h >= 0 %}green{% else %}red{% endif %}">
+                                {{ selected_crypto.Percent_change_1h }}%
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="card-title">Percent Change (24h) <i class="fas fa-chart-line"></i></h5>
+                            <p class="card-text h2" style="color: {% if selected_crypto.Percent_change_24h >= 0 %}green{% else %}red{% endif %}">
+                                {{ selected_crypto.Percent_change_24h }}%
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <h5 class="card-title">Volume (24h) <i class="fas fa-chart-bar"></i></h5>
+                            <p class="card-text h2">${{ selected_crypto.Volume_24h | floatformat:2 }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Add more details as needed -->
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary btn-lg" onclick="buyCrypto('{{ crypto_name }}', {{ selected_crypto.price.price }})">
+                            Buy <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="mt-4 text-center">Details not available for {{ crypto_name }}</p>
+        {% endif %}
+
+        <div class="text-center mt-4">
+            <a class="btn btn-secondary" href="{% url 'forexPioneer:index' %}">
+                Back to Coin Market Data <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
 
     <script>
         function buyCrypto(cryptoName, price) {
             // You can implement the logic for buying cryptocurrency here
-            alert(`Buying ${cryptoName} for ${price} USD`);
+            alert(`Buying ${cryptoName} for $${price.toFixed(2)} USD`);
         }
     </script>
 {% endblock %}
