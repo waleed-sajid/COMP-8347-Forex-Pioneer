@@ -1,6 +1,7 @@
 # forexPioneer/models.py
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
 class UserProfile(models.Model):
@@ -17,6 +18,12 @@ class PasswordResetRequest(models.Model):
     email = models.EmailField()
     token = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        # Define the validity period (e.g., 1 hour)
+        validity_period = timezone.timedelta(hours=1)
+        expiration_time = self.created_at + validity_period
+        return timezone.now() <= expiration_time
 
 
 class Order(models.Model):

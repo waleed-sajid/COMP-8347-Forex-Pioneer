@@ -14,8 +14,9 @@ from django.shortcuts import render
 from django.contrib import messages
 from .forms import PasswordResetForm
 from .models import PasswordResetRequest
-import secrets
 import json
+from django.contrib.auth.tokens import default_token_generator
+from django.urls import reverse
 
 
 def HomePage(request):
@@ -127,33 +128,86 @@ def forgot_password(request):
 
             try:
                 # Check if the email exists in your user database
-                user = UserProfile.objects.get(email=email)
-            except UserProfile.DoesNotExist:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
                 messages.error(request, 'Email does not exist.')
                 return redirect('forexPioneer:forgot_password')
 
-            # Generate and save a reset token
-            token = secrets.token_urlsafe(20)
+            # Generate and save a reset token using Django's built-in utility
+            token = default_token_generator.make_token(user)
             PasswordResetRequest.objects.create(email=email, token=token)
 
             base_url = request.build_absolute_uri('/')[:-1]
 
             # Send email with reset link
             subject = 'Reset Your Password'
-            message = f'Click the following link to reset your password: {base_url}/reset_password/{token}'
+            reset_url = reverse('forexPioneer:reset_password', kwargs={'token': token})
+            reset_url = f'{base_url}{reset_url}'
+            message = f'Click the following link to reset your password: {reset_url}'
 
             from_email = settings.EMAIL_HOST_USER
             to_email = [email]
 
-            send_mail(subject, message, from_email, to_email, fail_silently=False)
+            try:
+                send_mail(subject, message, from_email, to_email, fail_silently=False)
+                messages.success(request, 'Password reset email sent. Please check your email.')
+            except Exception as e:
+                messages.error(request, f'Error sending password reset email: {str(e)}')
 
-            messages.success(request, 'Password reset email sent. Please check your email.')
             return redirect('forexPioneer:login')
 
     else:
         form = PasswordResetForm()
 
     return render(request, 'forexPioneer/forget_password.html', {'form': form})
+
+
+def password_reset_view(request, token):
+    try:
+        password_reset_request = PasswordResetRequest.objects.get(token=token)
+        # Check if the token is still valid (e.g., not expired)
+        if password_reset_request.is_valid():
+            # Render a form for the user to set a new password
+            return render(request, 'forexPioneer/reset_password_form.html', {'token': token})
+        else:
+            messages.error(request, 'Invalid or expired token for password reset.')
+            return redirect('forexPioneer:login')
+    except PasswordResetRequest.DoesNotExist:
+        messages.error(request, 'Invalid or expired token for password reset.')
+        return redirect('forexPioneer:login')
+
+
+def reset_password_submit(request):
+    if request.method == 'POST':
+        token = request.POST.get('token')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        try:
+            password_reset_request = PasswordResetRequest.objects.get(token=token)
+            # Check if the token is still valid (e.g., not expired)
+            if password_reset_request.is_valid():
+                # Update the user's password
+                user = User.objects.get(email=password_reset_request.email)
+                user.set_password(new_password)
+                user.save()
+
+                # Log in the user
+                user = authenticate(request, username=user.username, password=new_password)
+                login(request, user)
+
+                # Mark the token as used or delete it
+                password_reset_request.used = True
+                password_reset_request.save()
+
+                messages.success(request, 'Password reset successful.')
+                return redirect('forexPioneer:index')
+            else:
+                messages.error(request, 'Invalid or expired token for password reset.')
+        except PasswordResetRequest.DoesNotExist:
+            messages.error(request, 'Invalid or expired token for password reset.')
+
+    return redirect('forexPioneer:login')
 
 
 def currency_details(request, crypto_name):
