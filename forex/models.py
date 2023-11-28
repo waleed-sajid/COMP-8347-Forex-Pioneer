@@ -21,7 +21,7 @@ class PasswordResetRequest(models.Model):
 
 class Order(models.Model):
     email = models.EmailField(max_length=254)
-    paid = models.BooleanField(default="False")
+    paid = models.BooleanField(default=False)
     amount = models.IntegerField(default=0)
     description = models.CharField(default=None, max_length=800)
 

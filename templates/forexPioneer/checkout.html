@@ -14,7 +14,7 @@
 </div>
  <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function () {
-    var stripe = Stripe('pk_test_51OEHsHItbrf8SNTB3RnCuQm8eM2Zf4PEXgtaC6vfQtNXgTX2xLNtzTb7keRGKhHgjsaKKUKS9O7MqIAZWIIaqMxg001942BbDN');
+    var stripe = Stripe('pk_test_51OFQAbI8VF4CMqePbvFqusJ22hkNXOez7BcX0KDXfIgerRqIDePJ0uMbort1t3POd0MYEiZWhSwGsosMNy9TDAGQ00mjNsGub6');
     var checkoutButton = document.getElementById('checkout-button');
 
     checkoutButton.addEventListener('click', function () {
@@ -28,7 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrfToken
             },
-            // Other options and body
+            // Include the user's email if authenticated
+            body: JSON.stringify({
+                customer_email: '{{ request.user.email }}',
+            }),
         })
         .then(function (response) {
             return response.json();

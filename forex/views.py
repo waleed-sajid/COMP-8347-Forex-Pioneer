@@ -15,6 +15,7 @@ from django.contrib import messages
 from .forms import PasswordResetForm
 from .models import PasswordResetRequest
 import secrets
+import json
 
 
 def HomePage(request):
@@ -192,8 +193,16 @@ def cancel(request):
 
 @csrf_exempt
 def checkout(request):
-    order = Order(email=" ", paid="False", amount=0, description=" ")
+    try:
+        # Parse JSON data from the request body
+        data = json.loads(request.body.decode('utf-8'))
+        customer_email = data.get('customer_email', '')
+    except json.JSONDecodeError:
+        customer_email = ''
+
+    order = Order(email=customer_email, paid=False, amount=0, description="")
     order.save()
+
     session = stripe.checkout.Session.create(
         client_reference_id=request.user.id if request.user.is_authenticated else None,
         payment_method_types=['card'],
@@ -215,9 +224,7 @@ def checkout(request):
         cancel_url=YOUR_DOMAIN + '/cancel.html',
     )
     print(session)
-    # ID=order.id
-    # order= Order.objects.filter(id=ID).update(email=customer_email,amount=price,paid=True,description=sessionID)
-    # order.save()
+
     return JsonResponse({'id': session.id})
 
 
