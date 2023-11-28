@@ -1,3 +1,5 @@
+from django.contrib.auth.views import PasswordResetCompleteView, PasswordResetConfirmView, PasswordResetDoneView, \
+    PasswordResetView
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
@@ -248,3 +250,57 @@ def webhook(request):
         Order.objects.filter(id=ID).update(email=customer_email, amount=price, paid=True, description=sessionID)
 
     return HttpResponse(status=200)
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'forexPioneer/password_reset_form.html'
+    email_template_name = 'forexPioneer/password_reset_email.html'
+    subject_template_name = 'forexPioneer/password_reset_email_subject.txt'
+    success_url = '/password_reset/done/'
+    # def form_valid(self, form):
+    #     # your form processing logic here
+    #
+    #     # manually construct the success URL
+    #     success_url = self.request.build_absolute_uri(reverse('internetProject:password_reset'))
+    #
+    #     # perform any additional logic if needed
+    #
+    #     return super().form_valid(form)
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'forexPioneer/password_reset_done.html'
+
+# class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+#     template_name = 'internetProject/password_reset_confirm.html'
+#     success_url = reverse_lazy('password_reset_complete')
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'forexPioneer/password_reset_confirm.html'
+    success_url = '/password_reset_complete/'
+
+    def get(self, request, *args, **kwargs):
+        uidb64 = self.kwargs.get('uidb64')
+        token = self.kwargs.get('token')
+
+        if uidb64 is not None and token is not None:
+            context = {'uidb64': uidb64, 'token': token}
+            return self.render_to_response(context)
+        else:
+            return HttpResponse("Invalid reset link")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['uidb64'] = self.kwargs.get('uidb64', '')
+        context['token'] = self.kwargs.get('token', '')
+        return context
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'forexPioneer/password_reset_complete.html'
+    #success_url = '/forexPioneer/password_reset_complete/'  # Adjust the URL as needed
+    # views.py
+
+    from django.contrib.auth.views import PasswordResetCompleteView
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'forexPioneer/password_reset_done.html'
+    success_url = '/forexPioneer/login/'  # Adjust the URL as needed
+
+
