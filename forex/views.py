@@ -272,8 +272,9 @@ def checkout(request):
     # Dynamic calculation logic based on your requirements
     crypto_price = float(data.get('crypto_price', 0.0))  # Assuming 'crypto_price' is a float
     total_amount = crypto_price
+    amount_to_be_saved = round(total_amount * quantity, 2)
 
-    order = Order(email=customer_email, paid=False, amount=total_amount, description="")
+    order = Order(email=customer_email, paid=False, amount=amount_to_be_saved, description="")
     order.save()
 
     session = stripe.checkout.Session.create(
