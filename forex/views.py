@@ -31,6 +31,7 @@ def HomePage(request):
     parameters = {
         'convert': "USD",
         'cryptocurrency_type': 'all',
+        'limit': 10
     }
     got_data = session.get(url, params=parameters)
     response_data = got_data.json()
@@ -49,7 +50,8 @@ def HomePage(request):
             # Add more fields as needed
         }
         relevant_data.append(crypto_info)
-        request.session['relevant_data'] = relevant_data
+    # Update the session with the latest data (outside the loop)
+    request.session['relevant_data'] = relevant_data
     return render(request, 'forexPioneer/index.html', {'data': relevant_data})
 
 
@@ -221,6 +223,9 @@ def currency_details(request, crypto_name):
             selected_crypto = crypto_info
             break
 
+    # Store the selected cryptocurrency data in the session
+    request.session['selected_crypto'] = selected_crypto
+
     context = {
         'crypto_name': crypto_name,
         'selected_crypto': selected_crypto,
@@ -234,17 +239,16 @@ YOUR_DOMAIN = 'http://127.0.0.1:8000/forexPioneer'
 
 # home view
 def home(request):
-    relevant_data = request.session.get('relevant_data', [])
-    # For demonstration purposes, let's assume the first cryptocurrency is selected
-    if relevant_data:
-        selected_crypto = relevant_data[0]
+    # Retrieve the selected cryptocurrency data from the session
+    selected_crypto = request.session.get('selected_crypto', None)
+
+    if selected_crypto:
         context = {
             'crypto_name': selected_crypto['name'],
             'crypto_price': selected_crypto['price']['price'],
         }
         return render(request, 'forexPioneer/checkout.html', context)
     else:
-        # Handle the case where no relevant data is available
         return render(request, 'forexPioneer/checkout.html', {})
 
 
