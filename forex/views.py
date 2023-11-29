@@ -64,7 +64,9 @@ def SignupPage(request):
             last_name = form.cleaned_data['last_name']
 
             # Try to get the user, create if not exists
-            user, created = User.objects.get_or_create(username=uname, defaults={'email': email, 'first_name': first_name, 'last_name': last_name})
+            user, created = User.objects.get_or_create(username=uname,
+                                                       defaults={'email': email, 'first_name': first_name,
+                                                                 'last_name': last_name})
             user.set_password(pass1)
             user.save()
 
@@ -262,10 +264,16 @@ def checkout(request):
         # Parse JSON data from the request body
         data = json.loads(request.body.decode('utf-8'))
         customer_email = data.get('customer_email', '')
+        quantity = int(data.get('quantity', 1))
     except json.JSONDecodeError:
         customer_email = ''
+        quantity = 1
 
-    order = Order(email=customer_email, paid=False, amount=0, description="")
+    # Dynamic calculation logic based on your requirements
+    crypto_price = float(data.get('crypto_price', 0.0))  # Assuming 'crypto_price' is a float
+    total_amount = crypto_price
+
+    order = Order(email=customer_email, paid=False, amount=total_amount, description="")
     order.save()
 
     session = stripe.checkout.Session.create(
@@ -273,13 +281,13 @@ def checkout(request):
         payment_method_types=['card'],
         line_items=[{
             'price_data': {
-                'currency': 'inr',
+                'currency': 'usd',  # Adjust currency as needed
                 'product_data': {
-                    'name': 'Intro to Django Course',
+                    'name': 'Amount to be paid',  # Replace with your product name
                 },
-                'unit_amount': 10000,
+                'unit_amount': int(total_amount * 100),  # Convert to cents
             },
-            'quantity': 1,
+            'quantity': quantity,
         }],
         metadata={
             "order_id": order.id
@@ -288,7 +296,6 @@ def checkout(request):
         success_url=YOUR_DOMAIN + '/success.html',
         cancel_url=YOUR_DOMAIN + '/cancel.html',
     )
-    print(session)
 
     return JsonResponse({'id': session.id})
 

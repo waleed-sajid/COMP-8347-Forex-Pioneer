@@ -13,19 +13,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'forex/checkout.css' %}"/>
 </head>
 <body>
-    <div class="container">
-        <h1>Place Your Order</h1>
-        <form id="checkout-form" method="POST" action="{% url 'forexPioneer:checkout' %}">
-            {% csrf_token %}
-            <label for="quantity">Quantity</label>
-            <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" required>
-        </form>
-        <p class="currency-info">Currency Name: {{ crypto_name }}</p>
-        <p class="currency-info">Currency Price: ${{ crypto_price }}</p>
-        <p>Total Amount to Pay: $<span id="totalAmount">{{ crypto_price }}</span></p>
-        <button type="button" class="btn btn-lg btn-success" id="checkout-button">Proceed to Checkout</button>
-    </div>
-    <script src="https://js.stripe.com/v3/"></script>
+<div class="container">
+    <h1>Place Your Order</h1>
+    <form id="checkout-form" method="POST" action="{% url 'forexPioneer:checkout' %}">
+        {% csrf_token %}
+        <label for="quantity">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" required>
+    </form>
+    <p class="currency-info">Currency Name: {{ crypto_name }}</p>
+    <p class="currency-info">Currency Price: ${{ crypto_price }}</p>
+    <p>Total Amount to Pay: $<span id="totalAmount">{{ crypto_price }}</span></p>
+    <button type="button" class="btn btn-lg btn-success" id="checkout-button">Proceed to Checkout</button>
+</div>
+<script src="https://js.stripe.com/v3/"></script>
+
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         var stripe = Stripe('pk_test_51OFQAbI8VF4CMqePbvFqusJ22hkNXOez7BcX0KDXfIgerRqIDePJ0uMbort1t3POd0MYEiZWhSwGsosMNy9TDAGQ00mjNsGub6');
@@ -46,72 +47,11 @@
                     'Content-Type': 'application/json',
                     'X-CSRFToken': csrfToken
                 },
-                // Include the user's email and quantity if authenticated
+                // Include the user's email, quantity, and crypto_price if authenticated
                 body: JSON.stringify({
                     customer_email: '{{ request.user.email }}',
                     quantity: quantityInput.value,
-                }),
-            })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (session) {
-                    return stripe.redirectToCheckout({sessionId: session.id});
-                })
-                .then(function (result) {
-                    if (result.error) {
-                        alert(result.error.message);
-                    }
-                })
-                .catch(function (error) {
-                    console.error('Error:', error);
-                });
-        });
-
-        // Update total amount when quantity changes
-        quantityInput.addEventListener('input', updateTotalAmount);
-
-        // Function to update total amount based on quantity
-        function updateTotalAmount() {
-            var quantity = parseInt(quantityInput.value, 10) || 1;
-            var totalPrice = parseFloat('{{ crypto_price }}') * quantity;
-            totalAmountSpan.textContent = totalPrice.toFixed(2);
-        }
-    });
-
-    // Function to get CSRF token from cookies
-    function getCookie(name) {
-        var value = "; " + document.cookie;
-        var parts = value.split("; " + name + "=");
-        if (parts.length == 2) return parts.pop().split(";").shift();
-    }
-</script>
-</body>
-</html>
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var stripe = Stripe('pk_test_51OFQAbI8VF4CMqePbvFqusJ22hkNXOez7BcX0KDXfIgerRqIDePJ0uMbort1t3POd0MYEiZWhSwGsosMNy9TDAGQ00mjNsGub6');
-        var checkoutButton = document.getElementById('checkout-button');
-        var quantityInput = document.getElementById('quantity');
-        var totalAmountSpan = document.getElementById('totalAmount');
-
-        updateTotalAmount(); // Update total amount initially
-
-        checkoutButton.addEventListener('click', function () {
-            // Fetch CSRF token from the cookies
-            var csrfToken = getCookie('csrftoken');
-
-            // Create a new Checkout Session using the server-side endpoint
-            fetch('{% url "forexPioneer:checkout" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                },
-                // Include the user's email and quantity if authenticated
-                body: JSON.stringify({
-                    customer_email: '{{ request.user.email }}',
-                    quantity: quantityInput.value,
+                    crypto_price: parseFloat('{{ crypto_price }}'),  // Make sure crypto_price is a valid float
                 }),
             })
                 .then(function (response) {
