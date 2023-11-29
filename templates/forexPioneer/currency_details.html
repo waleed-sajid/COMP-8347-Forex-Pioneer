@@ -24,14 +24,16 @@
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <h5 class="card-title">Percent Change (1h) <i class="fas fa-chart-line"></i></h5>
-                            <p class="card-text h2" style="color: {% if selected_crypto.Percent_change_1h >= 0 %}green{% else %}red{% endif %}">
+                            <p class="card-text h2"
+                               style="color: {% if selected_crypto.Percent_change_1h >= 0 %}green{% else %}red{% endif %}">
                                 {{ selected_crypto.Percent_change_1h }}%
                             </p>
                         </div>
 
                         <div class="col-md-6">
                             <h5 class="card-title">Percent Change (24h) <i class="fas fa-chart-line"></i></h5>
-                            <p class="card-text h2" style="color: {% if selected_crypto.Percent_change_24h >= 0 %}green{% else %}red{% endif %}">
+                            <p class="card-text h2"
+                               style="color: {% if selected_crypto.Percent_change_24h >= 0 %}green{% else %}red{% endif %}">
                                 {{ selected_crypto.Percent_change_24h }}%
                             </p>
                         </div>
@@ -46,9 +48,19 @@
 
                     <!-- Add more details as needed -->
                     <div class="text-center mt-4">
-                        <button class="btn btn-primary btn-lg" onclick="window.location.href = 'http://127.0.0.1:8000/forexPioneer/home/'">
-                            Buy <i class="fas fa-shopping-cart"></i>
-                        </button>
+                        {% if user.is_authenticated %}
+                            <button class="btn btn-primary btn-lg"
+                                    onclick="window.location.href = 'http://127.0.0.1:8000/forexPioneer/home/'">
+                                <i class="fas fa-shopping-cart"></i> Buy
+                            </button>
+                        {% else %}
+                            <div class="alert alert-warning mt-3" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Please log in to make a purchase.
+                                <a href="{% url 'forexPioneer:login' %}?next={{ request.path }}" class="alert-link">Log
+                                    in</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
