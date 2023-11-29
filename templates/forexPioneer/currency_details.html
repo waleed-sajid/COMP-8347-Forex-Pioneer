@@ -46,7 +46,7 @@
 
                     <!-- Add more details as needed -->
                     <div class="text-center mt-4">
-                        <button class="btn btn-primary btn-lg" onclick="buyCrypto('{{ crypto_name }}', {{ selected_crypto.price.price }})">
+                        <button class="btn btn-primary btn-lg" onclick="window.location.href = 'http://127.0.0.1:8000/forexPioneer/home/'">
                             Buy <i class="fas fa-shopping-cart"></i>
                         </button>
                     </div>
@@ -63,10 +63,4 @@
         </div>
     </div>
 
-    <script>
-        function buyCrypto(cryptoName, price) {
-            // You can implement the logic for buying cryptocurrency here
-            alert(`Buying ${cryptoName} for $${price.toFixed(2)} USD`);
-        }
-    </script>
 {% endblock %}

@@ -232,7 +232,18 @@ YOUR_DOMAIN = 'http://127.0.0.1:8000/forexPioneer'
 
 # home view
 def home(request):
-    return render(request, 'forexPioneer/checkout.html')
+    relevant_data = request.session.get('relevant_data', [])
+    # For demonstration purposes, let's assume the first cryptocurrency is selected
+    if relevant_data:
+        selected_crypto = relevant_data[0]
+        context = {
+            'crypto_name': selected_crypto['name'],
+            'crypto_price': selected_crypto['price']['price'],
+        }
+        return render(request, 'forexPioneer/checkout.html', context)
+    else:
+        # Handle the case where no relevant data is available
+        return render(request, 'forexPioneer/checkout.html', {})
 
 
 # success view
