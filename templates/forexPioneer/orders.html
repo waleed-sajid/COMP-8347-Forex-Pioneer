@@ -3,19 +3,34 @@
 {% block title %}My Orders{% endblock %}
 
 {% block content %}
-    <h1>My Orders</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="my-4 text-center">My Orders</h1>
 
-    {% if user_orders.count > 0 %}
-        <ul>
-            {% for order in user_orders %}
-                <li>
-                    <strong>Order:</strong> {{ order.description }}<br>
-                    <strong>Amount:</strong> ${{ order.amount }}<br>
-                    <strong>Status:</strong> {% if order.paid %}Paid{% else %}Pending{% endif %}<br>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>You haven't placed any orders yet.</p>
-    {% endif %}
+                {% if user_orders.count > 0 %}
+                    <div class="order-list">
+                        {% for order in user_orders %}
+                            <div class="card mb-4 shadow">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3">{{ order.description }}</h5>
+                                    <p class="card-text"><strong>Amount:</strong> ${{ order.amount }}</p>
+                                    <p class="card-text">
+                                        <strong>Status:</strong>
+                                        <span class="badge {% if order.paid %}badge-success{% else %}badge-warning{% endif %}">
+                                            {% if order.paid %}Paid{% else %}Pending{% endif %}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info text-center" role="alert">
+                        You haven't placed any orders yet.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
