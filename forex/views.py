@@ -274,7 +274,7 @@ def checkout(request):
     total_amount = crypto_price
     amount_to_be_saved = round(total_amount * quantity, 2)
 
-    order = Order(email=customer_email, paid=False, amount=amount_to_be_saved, description="")
+    order = Order(email=customer_email, paid=True, amount=amount_to_be_saved, description="")
     order.save()
 
     session = stripe.checkout.Session.create(
