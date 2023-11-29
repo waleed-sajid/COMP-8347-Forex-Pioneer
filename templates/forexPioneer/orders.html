@@ -1,0 +1,21 @@
+{% extends 'forexPioneer/base.html' %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+    <h1>My Orders</h1>
+
+    {% if user_orders %}
+        <ul>
+            {% for order in user_orders %}
+                <li>
+                    <strong>Order:</strong> {{ order.description }}<br>
+                    <strong>Amount:</strong> ${{ order.amount }}<br>
+                    <strong>Status:</strong> {% if order.paid %}Paid{% else %}Pending{% endif %}<br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't placed any orders yet.</p>
+    {% endif %}
+{% endblock %}

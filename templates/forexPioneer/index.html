@@ -1,5 +1,5 @@
 {% extends 'forexPioneer/base.html' %}
-
+{% load static %}
 {% block title %}Coin Market Data{% endblock %}
 
 {% block content %}
@@ -29,15 +29,46 @@
     <div class="container-fluid mt-5">
         <div class="row justify-content-end">
     <div class="col-md-4">
-        {% if user.is_authenticated %}
-            <p class="text-muted text-right">Welcome, <span class="font-weight-bold">{{ user.first_name }}</span>! <a href="{% url 'forexPioneer:logout' %}" class="btn btn-outline-danger ml-2">Logout</a></p>
-        {% else %}
-            <div class="text-right">
-                <a href="{% url 'forexPioneer:login' %}" class="btn btn-primary">Login</a>
-                <a href="{% url 'forexPioneer:signup' %}" class="btn btn-success">Signup</a>
+    {% if user.is_authenticated %}
+        <div class="d-flex align-items-center justify-content-end">
+            <div class="mr-3">
+                <!-- Circular Profile Picture -->
+                <img src="{% static 'media/waleed.jpeg' %}" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
             </div>
-        {% endif %}
-    </div>
+            <div class="text-right">
+                <!-- User Name -->
+                <p class="text-muted mb-1">Welcome, <span class="font-weight-bold">{{ user.first_name }}</span>!</p>
+                <!-- Custom Presentable Name with Orders and Logout -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        My Account
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'forexPioneer:orders' %}">Orders</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'forexPioneer:logout' %}" class="dropdown-item text-danger">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-right">
+            <a href="{% url 'forexPioneer:login' %}" class="btn btn-primary">Login</a>
+            <a href="{% url 'forexPioneer:signup' %}" class="btn btn-success">Signup</a>
+        </div>
+    {% endif %}
+</div>
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
         <h1 class="mb-4">Cryptocurrency Market Data</h1>

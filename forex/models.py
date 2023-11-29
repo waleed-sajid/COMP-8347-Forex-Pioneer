@@ -27,10 +27,11 @@ class PasswordResetRequest(models.Model):
 
 
 class Order(models.Model):
-    email = models.EmailField(max_length=254)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.CharField(default=None, max_length=800)
+    email = models.EmailField(max_length=254)
 
     def __str__(self):
-        return self.email
+        return f"{self.user.username}'s Order"

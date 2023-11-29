@@ -17,4 +17,5 @@ urlpatterns = [
     path('webhooks/stripe/', views.webhook,name='webhook'),
     path('reset_password/<str:token>/', views.password_reset_view, name='reset_password'),
     path('reset_password_submit/', views.reset_password_submit, name='reset_password_submit'),
+    path('orders/', views.orders, name='orders'),
 ]

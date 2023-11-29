@@ -17,6 +17,7 @@ from .models import PasswordResetRequest
 import json
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 
 def HomePage(request):
@@ -336,3 +337,11 @@ def webhook(request):
         Order.objects.filter(id=ID).update(email=customer_email, amount=price, paid=True, description=sessionID)
 
     return HttpResponse(status=200)
+
+
+@login_required
+def orders(request):
+    # Retrieve orders for the logged-in user
+    user_orders = Order.objects.filter(user=request.user)
+
+    return render(request, 'forexPioneer/orders.html', {'user_orders': user_orders})
