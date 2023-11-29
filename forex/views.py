@@ -350,3 +350,11 @@ def orders(request):
     user_orders = Order.objects.filter(user=request.user)
 
     return render(request, 'forexPioneer/orders.html', {'user_orders': user_orders})
+
+
+def about(request):
+    return render(request, 'forexPioneer/about.html')
+
+
+def contact(request):
+    return render(request, 'forexPioneer/contact.html')
