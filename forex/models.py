@@ -27,7 +27,7 @@ class PasswordResetRequest(models.Model):
 
 
 class Order(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.CharField(default=None, max_length=800)

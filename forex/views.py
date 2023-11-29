@@ -18,6 +18,7 @@ import json
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
 
 def HomePage(request):
@@ -270,40 +271,44 @@ def checkout(request):
         data = json.loads(request.body.decode('utf-8'))
         customer_email = data.get('customer_email', '')
         quantity = int(data.get('quantity', 1))
-    except json.JSONDecodeError:
-        customer_email = ''
-        quantity = 1
 
-    # Dynamic calculation logic based on your requirements
-    crypto_price = float(data.get('crypto_price', 0.0))  # Assuming 'crypto_price' is a float
-    total_amount = crypto_price
-    amount_to_be_saved = round(total_amount * quantity, 2)
+        # Dynamic calculation logic based on your requirements
+        crypto_price = float(data.get('crypto_price', 0.0))  # Assuming 'crypto_price' is a float
+        total_amount = crypto_price
+        amount_to_be_saved = round(total_amount * quantity, 2)
 
-    order = Order(email=customer_email, paid=True, amount=amount_to_be_saved, description="")
-    order.save()
+        # Get or create a user instance
+        user_instance = request.user if request.user.is_authenticated else None
 
-    session = stripe.checkout.Session.create(
-        client_reference_id=request.user.id if request.user.is_authenticated else None,
-        payment_method_types=['card'],
-        line_items=[{
-            'price_data': {
-                'currency': 'usd',  # Adjust currency as needed
-                'product_data': {
-                    'name': 'Amount to be paid',  # Replace with your product name
+        order = Order(user=user_instance, email=customer_email, paid=True, amount=amount_to_be_saved, description="")
+        order.save()
+
+        session = stripe.checkout.Session.create(
+            client_reference_id=request.user.id if request.user.is_authenticated else None,
+            payment_method_types=['card'],
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',  # Adjust currency as needed
+                    'product_data': {
+                        'name': 'Amount to be paid',  # Replace with your product name
+                    },
+                    'unit_amount': int(total_amount * 100),  # Convert to cents
                 },
-                'unit_amount': int(total_amount * 100),  # Convert to cents
+                'quantity': quantity,
+            }],
+            metadata={
+                "order_id": order.id
             },
-            'quantity': quantity,
-        }],
-        metadata={
-            "order_id": order.id
-        },
-        mode='payment',
-        success_url=YOUR_DOMAIN + '/success.html',
-        cancel_url=YOUR_DOMAIN + '/cancel.html',
-    )
+            mode='payment',
+            success_url=YOUR_DOMAIN + '/success.html',
+            cancel_url=YOUR_DOMAIN + '/cancel.html',
+        )
 
-    return JsonResponse({'id': session.id})
+        return JsonResponse({'id': session.id})
+    except IntegrityError as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 
 
 @csrf_protect
