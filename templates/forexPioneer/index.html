@@ -105,47 +105,34 @@
                 <div class="carouselDiv">
                     <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
-                            <!-- Card 1 -->
-                            <div class="carousel-item active">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 1 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 1</h5>
-                                        <p class="card-text">Some description for Currency 1.</p>
-                                    </div>
+                            {% for crypto_info in top_10_currencies %}
+                                {% if forloop.counter0|divisibleby:3 %}
+                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                {% endif %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ crypto_info.name }}</h5>
+                                    <p class="card-text">Price: ${{ crypto_info.price }}</p>
+                                    <!-- Add more details as needed -->
                                 </div>
                             </div>
-                            <!-- Card 2 -->
-                            <div class="carousel-item">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 2 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 2</h5>
-                                        <p class="card-text">Some description for Currency 2.</p>
-                                    </div>
+                            {% if forloop.counter0|add:1|divisibleby:3 or forloop.last %}
                                 </div>
-                            </div>
-                            <!-- Card 3 -->
-                            <div class="carousel-item">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 3 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 3</h5>
-                                        <p class="card-text">Some description for Currency 3.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
 
                         <!-- Navigation Arrows -->
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
-                        </ol>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
             </div>
