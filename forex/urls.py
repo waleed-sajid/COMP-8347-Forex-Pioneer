@@ -5,7 +5,7 @@ app_name = 'forexPioneer'
 
 urlpatterns = [
     path('signup/', views.SignupPage, name='signup'),
-    path('', views.HomePage, name='index'),
+    path('', views.latest_listing, name='index'),
     path('login/', views.LoginPage, name='login'),
     path('logout/', views.LogoutPage, name='logout'),
     path('currency_details/<str:crypto_name>/', views.currency_details, name='currency_details'),
@@ -20,4 +20,5 @@ urlpatterns = [
     path('orders/', views.orders, name='orders'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('historical/', views.map_historical, name='historical'),
 ]

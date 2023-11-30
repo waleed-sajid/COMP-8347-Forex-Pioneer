@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Cryptocurrencies</title>
+</head>
+<body>
+    <h1>Trending Cryptocurrencies</h1>
+
+    {% if data %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Symbol</th>
+                    <th>Slug</th>
+                    <th>Rank</th>
+                    <th>First Historical Data</th>
+                    <th>Last Historical Data</th>
+                    <!-- Add more table headers as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for crypto_info in data %}
+                    <tr>
+                        <td>{{ crypto_info.name }}</td>
+                        <td>{{ crypto_info.symbol }}</td>
+                        <td>{{ crypto_info.slug }}</td>
+                        <td>{{ crypto_info.rank }}</td>
+                        <td>{{ crypto_info.first_historical_data }}</td>
+                        <td>{{ crypto_info.last_historical_data }}</td>
+                        <!-- Add more table cells as needed -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No data available.</p>
+    {% endif %}
+</body>
+</html>

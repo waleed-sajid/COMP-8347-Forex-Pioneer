@@ -21,7 +21,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
 
-def HomePage(request):
+def latest_listing(request):
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
     headers = {
         'X-CMC_PRO_API_KEY': '407f8d80-c5da-4e63-9b94-c8e208fc44a8',
@@ -33,7 +33,7 @@ def HomePage(request):
     parameters = {
         'convert': "USD",
         'cryptocurrency_type': 'all',
-        'limit': 10
+        'limit': 100
     }
     got_data = session.get(url, params=parameters)
     response_data = got_data.json()
@@ -55,6 +55,41 @@ def HomePage(request):
     # Update the session with the latest data (outside the loop)
     request.session['relevant_data'] = relevant_data
     return render(request, 'forexPioneer/index.html', {'data': relevant_data})
+
+
+def map_historical(request):
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map'
+    headers = {
+        'X-CMC_PRO_API_KEY': '407f8d80-c5da-4e63-9b94-c8e208fc44a8',
+        'Accepts': 'application/json',
+    }
+    session = Session()
+    session.headers.update(headers)
+
+    parameters = {
+        'limit': 100
+    }
+    got_data = session.get(url, params=parameters)
+    response_data = got_data.json()
+
+    # Extract specific fields from the response
+    relevant_data = []
+    for cryptocurrency in response_data.get('data', []):
+        crypto_info = {
+            'name': cryptocurrency.get('name', ''),
+            'symbol': cryptocurrency.get('symbol', ''),
+            'slug': cryptocurrency.get('slug', ''),
+            'rank': cryptocurrency.get('rank', ''),
+            'first_historical_data': cryptocurrency.get('first_historical_data', ''),
+            'last_historical_data': cryptocurrency.get('last_historical_data', ''),
+            # Add more fields as needed
+        }
+        relevant_data.append(crypto_info)
+
+    # Update the session with the latest data
+    request.session['relevant_data'] = relevant_data
+
+    return render(request, 'forexPioneer/historical.html', {'data': relevant_data})
 
 
 def SignupPage(request):
