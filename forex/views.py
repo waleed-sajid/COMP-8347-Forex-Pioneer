@@ -63,6 +63,12 @@ def latest_listing(request):
     # Take only the top 6 currencies based on market cap
     top_6_currencies_market_cap = relevant_data_market_cap_sorted[:6]
 
+    # Sort the relevant_data based on the 'volume_24h' key
+    relevant_data_volume_sorted = sorted(relevant_data, key=lambda x: x['Volume_24h'], reverse=True)
+
+    # Take only the top 6 currencies based on 24-hour volume
+    top_6_currencies_volume = relevant_data_volume_sorted[:6]
+
     # Update the session with the latest data (outside the loop)
     request.session['relevant_data'] = relevant_data
 
@@ -70,7 +76,9 @@ def latest_listing(request):
         'data': relevant_data,
         'top_10_currencies_price': top_10_currencies_price,
         'top_6_currencies_market_cap': top_6_currencies_market_cap,
+        'top_6_currencies_volume': top_6_currencies_volume,
     })
+
 
 
 def map_historical(request):
