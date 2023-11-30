@@ -210,7 +210,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -232,7 +232,7 @@
                         <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'forexPioneer:currency_details' crypto_info.name %}"
                                class="text-primary">{{ crypto_info.name }}</a></td>
-                        <td>${{ crypto_info.price.price | floatformat:2 }}</td>
+                        <td>${{ crypto_info.price | floatformat:2 }}</td>
 
                         <!-- Percent Change (1h) -->
                         <td class="{% if crypto_info.Percent_change_1h >= 0 %}text-success{% else %}text-danger{% endif %}">
