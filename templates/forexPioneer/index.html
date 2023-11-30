@@ -103,9 +103,10 @@
             <!-- First Carousel -->
             <div class="col-md-4">
                 <div class="carouselDiv">
+                    <h4>Top Currencies</h4>
                     <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
-                            {% for crypto_info in top_10_currencies %}
+                            {% for crypto_info in top_10_currencies_price %}
                                 {% if forloop.counter0|divisibleby:3 %}
                                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
                                 {% endif %}
@@ -137,149 +138,136 @@
                 </div>
             </div>
 
-            <!-- Second Carousel -->
-            <div class="col-md-4">
-                <div class="carouselDiv">
-                    <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <!-- Card 1 -->
-                            <div class="carousel-item active">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 1 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 1</h5>
-                                        <p class="card-text">Some description for Currency 1.</p>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- Card 2 -->
-                            <div class="carousel-item">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 2 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 2</h5>
-                                        <p class="card-text">Some description for Currency 2.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Card 3 -->
-                            <div class="carousel-item">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 3 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 3</h5>
-                                        <p class="card-text">Some description for Currency 3.</p>
-                                    </div>
-                                </div>
+        <!-- Second Carousel for Top 6 Currencies based on Market Cap -->
+        <div class="col-md-4">
+            <div class="carouselDiv">
+                <h4>Top Market Cap</h4>
+                <div id="carouselExampleIndicators2" class="carousel slide" data-ride="false">
+                    <div class="carousel-inner">
+                        {% for currency in top_6_currencies_market_cap %}
+                            {% if forloop.counter0|divisibleby:3 %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            {% endif %}
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ currency.name }}</h5>
+                                <p class="card-text">Market Cap: {{ currency.Market_cap }}</p>
+                                <!-- Add more details as needed -->
                             </div>
                         </div>
-
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
-                        </ol>
+                        {% if forloop.counter0|add:1|divisibleby:3 or forloop.last %}
+                            </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
-                </div>
-            </div>
 
-            <!-- Third Carousel -->
-            <div class="col-md-4">
-                <div class="carouselDiv">
-                    <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <!-- Card 1 -->
-                            <div class="carousel-item active">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 1 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 1</h5>
-                                        <p class="card-text">Some description for Currency 1.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Card 2 -->
-                            <div class="carousel-item">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 2 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 2</h5>
-                                        <p class="card-text">Some description for Currency 2.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Card 3 -->
-                            <div class="carousel-item">
-                                <div class="card">
-                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
-                                         alt="Card 3 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Currency 3</h5>
-                                        <p class="card-text">Some description for Currency 3.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators3" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators3" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators3" data-slide-to="2"></li>
-                        </ol>
-                    </div>
+                    <!-- Navigation Arrows -->
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="thead-dark">
+
+        <!-- Third Carousel -->
+        <div class="col-md-4">
+            <div class="carouselDiv">
+                <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <!-- Card 1 -->
+                        <div class="carousel-item active">
+                            <div class="card">
+                                <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                     alt="Card 1 Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">Currency 1</h5>
+                                    <p class="card-text">Some description for Currency 1.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="carousel-item">
+                            <div class="card">
+                                <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                     alt="Card 2 Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">Currency 2</h5>
+                                    <p class="card-text">Some description for Currency 2.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="carousel-item">
+                            <div class="card">
+                                <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                     alt="Card 3 Image">
+                                <div class="card-body">
+                                    <h5 class="card-title">Currency 3</h5>
+                                    <p class="card-text">Some description for Currency 3.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators3" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators3" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators3" data-slide-to="2"></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Price (USD)</th>
+                <th>1h Change</th>
+                <th>24h Change</th>
+                <th>Market Cap</th>
+                <th>Volume (24h)</th>
+                <!-- Add more table headers for additional fields -->
+            </tr>
+            </thead>
+            <tbody>
+            {% for crypto_info in data %}
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Price (USD)</th>
-                    <th>1h Change</th>
-                    <th>24h Change</th>
-                    <th>Market Cap</th>
-                    <th>Volume (24h)</th>
-                    <!-- Add more table headers for additional fields -->
+                    <td>{{ forloop.counter }}</td>
+                    <td><a href="{% url 'forexPioneer:currency_details' crypto_info.name %}"
+                           class="text-primary">{{ crypto_info.name }}</a></td>
+                    <td>${{ crypto_info.price.price | floatformat:2 }}</td>
+
+                    <!-- Percent Change (1h) -->
+                    <td class="{% if crypto_info.Percent_change_1h >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        {{ crypto_info.Percent_change_1h }}%
+                    </td>
+
+                    <!-- Percent Change (24h) -->
+                    <td class="{% if crypto_info.Percent_change_24h >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        {{ crypto_info.Percent_change_24h }}%
+                    </td>
+
+                    <td>${{ crypto_info.Market_cap | floatformat:2 }}</td>
+                    <td>${{ crypto_info.Volume_24h | floatformat:2 }}</td>
+                    <!-- Add more table cells for additional fields -->
                 </tr>
-                </thead>
-                <tbody>
-                {% for crypto_info in data %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td><a href="{% url 'forexPioneer:currency_details' crypto_info.name %}"
-                               class="text-primary">{{ crypto_info.name }}</a></td>
-                        <td>${{ crypto_info.price.price | floatformat:2 }}</td>
-
-                        <!-- Percent Change (1h) -->
-                        <td class="{% if crypto_info.Percent_change_1h >= 0 %}text-success{% else %}text-danger{% endif %}">
-                            {{ crypto_info.Percent_change_1h }}%
-                        </td>
-
-                        <!-- Percent Change (24h) -->
-                        <td class="{% if crypto_info.Percent_change_24h >= 0 %}text-success{% else %}text-danger{% endif %}">
-                            {{ crypto_info.Percent_change_24h }}%
-                        </td>
-
-                        <td>${{ crypto_info.Market_cap | floatformat:2 }}</td>
-                        <td>${{ crypto_info.Volume_24h | floatformat:2 }}</td>
-                        <!-- Add more table cells for additional fields -->
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
     </div>
 
     <script>

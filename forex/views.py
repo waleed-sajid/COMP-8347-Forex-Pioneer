@@ -48,21 +48,29 @@ def latest_listing(request):
             'Percent_change_24h': cryptocurrency.get('quote', {}).get('USD', {}).get('percent_change_24h', ''),
             'Market_cap': cryptocurrency.get('quote', {}).get('USD', {}).get('market_cap', ''),
             'Volume_24h': cryptocurrency.get('quote', {}).get('USD', {}).get('volume_24h', ''),
-
-            # Add more fields as needed
         }
         relevant_data.append(crypto_info)
 
     # Sort the relevant_data based on the 'price' key
-    relevant_data = sorted(relevant_data, key=lambda x: x['price'], reverse=True)
+    relevant_data_price_sorted = sorted(relevant_data, key=lambda x: x['price'], reverse=True)
 
-    # Take only the top 9 currencies
-    top_10_currencies = relevant_data[:9]
+    # Take only the top 9 currencies based on price
+    top_10_currencies_price = relevant_data_price_sorted[:9]
+
+    # Sort the relevant_data based on the 'market_cap' key
+    relevant_data_market_cap_sorted = sorted(relevant_data, key=lambda x: x['Market_cap'], reverse=True)
+
+    # Take only the top 6 currencies based on market cap
+    top_6_currencies_market_cap = relevant_data_market_cap_sorted[:6]
 
     # Update the session with the latest data (outside the loop)
     request.session['relevant_data'] = relevant_data
 
-    return render(request, 'forexPioneer/index.html', {'data': relevant_data, 'top_10_currencies': top_10_currencies})
+    return render(request, 'forexPioneer/index.html', {
+        'data': relevant_data,
+        'top_10_currencies_price': top_10_currencies_price,
+        'top_6_currencies_market_cap': top_6_currencies_market_cap,
+    })
 
 
 def map_historical(request):
