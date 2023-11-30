@@ -6,3 +6,27 @@
 .table-responsive {
     margin-top: 20px; /* Add top margin to create space between carousel and table */
 }
+
+/* Custom styles for carousel arrows */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black; /* Change this to your preferred color */
+    border-radius: 50%;
+    font-size: 24px; /* Adjust the font size of the arrows */
+    color: white; /* Set the arrow color */
+    line-height: 1; /* Ensure proper vertical alignment */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 3%; /* Adjust the size of the arrows */
+    background-color: transparent; /* Make the background transparent */
+    opacity: 0.7; /* Set initial opacity for a subtle look */
+    transition: opacity 0.3s; /* Add a smooth transition effect */
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.4); /* Darken the background on hover */
+    opacity: 1; /* Make the arrows fully opaque on hover */
+}
