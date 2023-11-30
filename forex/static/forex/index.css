@@ -1,0 +1,12 @@
+
+.carousel-indicators {
+    color: black;
+}
+
+.carousel-indicators li {
+    background-color: black;
+}
+
+.carousel-indicators .active {
+    background-color: white; /* Color for the active indicator */
+}

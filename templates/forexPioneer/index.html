@@ -1,7 +1,9 @@
 {% extends 'forexPioneer/base.html' %}
 {% load static %}
 {% block title %}Coin Market Data{% endblock %}
-
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'forex/index.css' %}"/>
+{% endblock %}
 {% block content %}
     <!-- Menubar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -23,9 +25,10 @@
             </ul>
 
             <!-- Make "Forex Pioneer" a little bigger -->
-           <a class="navbar-brand mx-auto" href="{% url 'forexPioneer:index' %}" style="font-size: 32px; font-family: 'Georgia', serif; font-weight: bold;">
-    Forex Pioneer
-</a>
+            <a class="navbar-brand mx-auto" href="{% url 'forexPioneer:index' %}"
+               style="font-size: 32px; font-family: 'Georgia', serif; font-weight: bold;">
+                Forex Pioneer
+            </a>
 
             <!-- Add remaining space on the right -->
             <div class="ml-auto">
@@ -84,8 +87,171 @@
 
 
         </div>
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-end align-items-center"
+                 style="padding-top: 20px; padding-bottom: 20px;">
+                <div class="form-check form-switch" id="carouselToggleBtn1">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked1" checked
+                           onchange="toggleCarousels()">
+                    <label class="form-check-label" for="flexSwitchCheckChecked1">Highlights</label>
+                </div>
+            </div>
+        </div>
 
-        <h1 class="mb-4">Cryptocurrency Market Data</h1>
+
+        <div class="row">
+            <!-- First Carousel -->
+            <div class="col-md-4">
+                <div class="carouselDiv">
+                    <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- Card 1 -->
+                            <div class="carousel-item active">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 1 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 1</h5>
+                                        <p class="card-text">Some description for Currency 1.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="carousel-item">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 2 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 2</h5>
+                                        <p class="card-text">Some description for Currency 2.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="carousel-item">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 3 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 3</h5>
+                                        <p class="card-text">Some description for Currency 3.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Arrows -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Carousel -->
+            <div class="col-md-4">
+                <div class="carouselDiv">
+                    <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- Card 1 -->
+                            <div class="carousel-item active">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 1 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 1</h5>
+                                        <p class="card-text">Some description for Currency 1.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="carousel-item">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 2 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 2</h5>
+                                        <p class="card-text">Some description for Currency 2.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="carousel-item">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 3 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 3</h5>
+                                        <p class="card-text">Some description for Currency 3.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Third Carousel -->
+            <div class="col-md-4">
+                <div class="carouselDiv">
+                    <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- Card 1 -->
+                            <div class="carousel-item active">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 1 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 1</h5>
+                                        <p class="card-text">Some description for Currency 1.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="carousel-item">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 2 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 2</h5>
+                                        <p class="card-text">Some description for Currency 2.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="carousel-item">
+                                <div class="card">
+                                    <img src="https://shorturl.at/aqxyH" class="card-img-top d-block w-100"
+                                         alt="Card 3 Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Currency 3</h5>
+                                        <p class="card-text">Some description for Currency 3.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators3" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators3" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators3" data-slide-to="2"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -128,6 +294,21 @@
             </table>
         </div>
     </div>
+
+    <script>
+        function toggleCarousels() {
+            var highlightCheckbox = document.getElementById('flexSwitchCheckChecked1');
+            var carousels = document.querySelectorAll('.carouselDiv');
+
+            carousels.forEach(function (carousel) {
+                if (highlightCheckbox.checked) {
+                    carousel.style.display = 'block';
+                } else {
+                    carousel.style.display = 'none';
+                }
+            });
+        }
+    </script>
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-5">
