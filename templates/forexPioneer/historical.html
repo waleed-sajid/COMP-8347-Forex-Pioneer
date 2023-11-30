@@ -1,87 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trending Cryptocurrencies</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+{% extends 'forexPioneer/base.html' %}
+{% load static %}
+{% block title %}Historical Cryptocurrencies{% endblock %}
 
-        h1 {
-            color: #333;
-        }
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'forex/historical.css' %}"/>
 
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-        }
+{% endblock %}
 
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th, td:first-child {
-            background-color: #6c4c00; /* Golden color */
-            color: white;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background-color: #f0f8ff; /* Light blue highlight on hover */
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9; /* Alternate row color */
-        }
-
-        p {
-            color: #777;
-        }
-    </style>
-</head>
-<body>
+{% block content %}
     <h1>Trending Cryptocurrencies</h1>
 
     {% if data %}
         <table>
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Symbol</th>
-                    <th>Slug</th>
-                    <th>Rank</th>
-                    <th>First Historical Data</th>
-                    <th>Last Historical Data</th>
-                    <!-- Add more table headers as needed -->
-                </tr>
+            <tr>
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Slug</th>
+                <th>Rank</th>
+                <th>First Historical Data</th>
+                <th>Last Historical Data</th>
+                <!-- Add more table headers as needed -->
+            </tr>
             </thead>
             <tbody>
-                {% for crypto_info in data %}
-                    <tr>
-                        <td>{{ crypto_info.name }}</td>
-                        <td>{{ crypto_info.symbol }}</td>
-                        <td>{{ crypto_info.slug }}</td>
-                        <td>{{ crypto_info.rank }}</td>
-                        <td>{{ crypto_info.first_historical_data }}</td>
-                        <td>{{ crypto_info.last_historical_data }}</td>
-                        <!-- Add more table cells as needed -->
-                    </tr>
-                {% endfor %}
+            {% for crypto_info in data %}
+                <tr>
+                    <td>{{ crypto_info.name }}</td>
+                    <td>{{ crypto_info.symbol }}</td>
+                    <td>{{ crypto_info.slug }}</td>
+                    <td>{{ crypto_info.rank }}</td>
+                    <td>{{ crypto_info.first_historical_data }}</td>
+                    <td>{{ crypto_info.last_historical_data }}</td>
+                    <!-- Add more table cells as needed -->
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     {% else %}
         <p>No data available.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}
