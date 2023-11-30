@@ -80,7 +80,6 @@ def latest_listing(request):
     })
 
 
-
 def map_historical(request):
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map'
     headers = {
@@ -278,10 +277,11 @@ def reset_password_submit(request):
 def currency_details(request, crypto_name):
     relevant_data = request.session.get('relevant_data', [])
     # Extract the details for the specific cryptocurrency
-    selected_crypto = None
     for crypto_info in relevant_data:
         if crypto_info['name'] == crypto_name:
             selected_crypto = crypto_info
+            # Include the 'price' information in the selected_crypto dictionary
+            selected_crypto['price'] = crypto_info.get('price', '')
             break
 
     # Store the selected cryptocurrency data in the session
@@ -306,7 +306,7 @@ def home(request):
     if selected_crypto:
         context = {
             'crypto_name': selected_crypto['name'],
-            'crypto_price': selected_crypto['price']['price'],
+            'crypto_price': selected_crypto['price'],
         }
         return render(request, 'forexPioneer/checkout.html', context)
     else:
