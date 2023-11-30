@@ -45,9 +45,10 @@
         </div>
     </nav>
 
-    <div class="container-fluid mt-5">
-        <div class="row justify-content-end">
-            <div class="col-md-4">
+   <div class="container-fluid mt-5">
+     <div class="row justify-content-center">
+         <div class="col-md-8 text-center">
+
                 {% if user.is_authenticated %}
                     <div class="d-flex align-items-center justify-content-end">
                         <div class="mr-3">
@@ -85,7 +86,12 @@
 
         </div>
 
-        <h1 class="mb-4">Cryptocurrency Market Data</h1>
+        <div class="text-center"> <!-- Center the heading -->
+    <h1 class="mb-4" style="font-family: 'Your_Attractive_Font', serif; font-size: 36px; font-weight: bold;">
+        Cryptocurrency Market Data
+    </h1>
+</div>
+
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
